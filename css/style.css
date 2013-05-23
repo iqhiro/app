@@ -1,0 +1,42 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+article,
+aside {
+  float: left;
+  height: 100%;
+  position: relative;
+}
+
+article {
+  width: 40%;
+  min-width: 320px;
+}
+
+article > .view {
+  margin: -240px 0 0 -160px;
+  width: 320px;
+  height: 480px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-width: 5px;
+  border-color: black;
+  border-style: solid;
+}
+
+aside {
+  width: 60%;
+  background-color: whitesmoke;
+}
+
+.box {
+  width: 60px;
+  height: 60px;
+  background: gray;
+  text-align: center;
+}
