@@ -1,19 +1,29 @@
-(function(global, doc){
+(function(global, doc, undefined){
     "use strict";
     var ns = global['app'] = {};
 
 
 (function(){
-    var Class = function() {
+    /**
+     * Class
+     * @returns {Function}
+     * @constructor
+     */
+    var Class = function(parent) {
 
         var klass = function() {
             this.init.apply(this, arguments);
         };
 
         if(parent) {
+            /**
+             * Subclass
+             * @constructor
+             */
             var Subclass = function() {};
             Subclass.prototype = parent.prototype;
             klass.prototype = new Subclass();
+            klass.__super__ = parent.prototype;
         }
 
         klass.prototype.init = function(){};
@@ -24,18 +34,26 @@
         // shorthand to access Class
         klass.fn.parent = klass;
 
-        // proxy instance context
-        klass.proxy = function(func) {
+        /**
+         * proxy
+         * @param func
+         * @returns {Function}
+         */
+        klass['proxy'] = function(func) {
             var self = this;
             return(function() {
                 return func.apply(self, arguments);
             });
         };
 
-        klass.fn.proxy = klass.proxy;
+        klass.fn['proxy'] = klass.proxy;
 
-        // extend class property
-        klass.extend = function(obj) {
+        /**
+         * klass.extend
+         * @param obj
+         * extend class property
+         */
+        klass['extend'] = function(obj) {
             var extended = obj.extended;
             for(var i in obj) {
                 klass[i] = obj[i];
@@ -45,8 +63,11 @@
             }
         };
 
-        // include instance property
-        klass.include = function(obj) {
+        /**
+         * include instance
+         * @param obj
+         */
+        klass['include'] = function(obj) {
             var included = obj.included;
             for(var i in obj) {
                 klass.fn[i] = obj[i];
@@ -62,7 +83,26 @@
     ns['Class'] = Class;
 }());
 (function(){
+    /**
+     * Event
+     * @type {ns.Class}
+     */
     var Event = new ns.Class();
+
+    Event.extend({
+        list: []
+    });
+
+    Event.include({
+        /**
+         * addEventListener
+         * @param name
+         * @param callback
+         */
+        'addEventListener' : function(name, callback) {
+            this.list.append();
+        }
+    });
 
     ns['Event'] = Event;
 }());
@@ -101,4 +141,4 @@
     ns.Person = Person;
     ns.Button = Button;
 }());
-}(this, this.document));
+}(window, window.document));

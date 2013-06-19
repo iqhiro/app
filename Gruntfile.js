@@ -24,6 +24,17 @@ module.exports = function(grunt) {
             }
         },
 
+        'closure-compiler': {
+            fontend: {
+                //closurePath: '~/compiler/compiler.jar',
+                js: 'js/app.js',
+                jsOutputFile: 'js/app.min.js',
+                maxBuffer: 500,
+                options: {
+                }
+            }
+        },
+
         watch: {
             scripts: {
                 files: ['js/src/*.js'],
@@ -36,9 +47,10 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-closure-compiler');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     //ToDo add grunt-closure-compiler
 
-    grunt.registerTask('default',['jshint:beforeconcat','concat','jshint:afterconcat']);
+    grunt.registerTask('default',['jshint:beforeconcat','concat','jshint:afterconcat','closure-compiler']);
 };
